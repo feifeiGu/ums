@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oit.oitcloud.dao.OitUserDao">
+
+    <resultMap type="com.oit.oitcloud.entity.OitUser" id="OitUserMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="username" column="USERNAME" jdbcType="VARCHAR"/>
+        <result property="password" column="PASSWORD" jdbcType="VARCHAR"/>
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="mobile" column="MOBILE" jdbcType="VARCHAR"/>
+        <result property="email" column="EMAIL" jdbcType="VARCHAR"/>
+        <result property="jobId" column="JOB_ID" jdbcType="VARCHAR"/>
+        <result property="jobTitle" column="JOB_TITLE" jdbcType="VARCHAR"/>
+        <result property="departmentId" column="DEPARTMENT_ID" jdbcType="INTEGER"/>
+        <result property="department" column="DEPARTMENT" jdbcType="VARCHAR"/>
+        <result property="companyId" column="COMPANY_ID" jdbcType="INTEGER"/>
+        <result property="company" column="COMPANY" jdbcType="VARCHAR"/>
+        <result property="userType" column="USER_TYPE" jdbcType="VARCHAR"/>
+        <result property="status" column="STATUS" jdbcType="VARCHAR"/>
+        <result property="createBy" column="CREATE_BY" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="modifyBy" column="MODIFY_BY" jdbcType="VARCHAR"/>
+        <result property="modifyTime" column="MODIFY_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OitUserMap">
+        select
+          ID, USERNAME, PASSWORD, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_user
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OitUserMap">
+        select
+          ID, USERNAME, PASSWORD, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="OitUserMap">
+        select
+          ID, USERNAME, PASSWORD, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_user
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and USERNAME like '%' #{username} '%'
+            </if>
+            <if test="password != null and password != ''">
+                and PASSWORD = #{password}
+            </if>
+            <if test="name != null and name != ''">
+                and NAME like '%' #{name} '%'
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and MOBILE like '%' #{mobile} '%'
+            </if>
+            <if test="email != null and email != ''">
+                and EMAIL = #{email}
+            </if>
+            <if test="jobId != null and jobId != ''">
+                and JOB_ID = #{jobId}
+            </if>
+            <if test="jobTitle != null and jobTitle != ''">
+                and JOB_TITLE = #{jobTitle}
+            </if>
+            <if test="departmentId != null">
+                and DEPARTMENT_ID = #{departmentId}
+            </if>
+            <if test="department != null and department != ''">
+                and DEPARTMENT = #{department}
+            </if>
+            <if test="companyId != null">
+                and COMPANY_ID = #{companyId}
+            </if>
+            <if test="company != null and company != ''">
+                and COMPANY = #{company}
+            </if>
+            <if test="userType != null and userType != ''">
+                and USER_TYPE = #{userType}
+            </if>
+            <if test="status != null and status != ''">
+                and STATUS = #{status}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and CREATE_BY = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and CREATE_TIME = #{createTime}
+            </if>
+            <if test="modifyBy != null and modifyBy != ''">
+                and MODIFY_BY = #{modifyBy}
+            </if>
+            <if test="modifyTime != null">
+                and MODIFY_TIME = #{modifyTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into oit_user_center.oit_user(USERNAME, PASSWORD, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        values (#{username}, #{password}, #{name}, #{mobile}, #{email}, #{jobId}, #{jobTitle}, #{departmentId}, #{department}, #{companyId}, #{company}, #{userType}, #{status}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update oit_user_center.oit_user
+        <set>
+            <if test="username != null and username != ''">
+                USERNAME = #{username},
+            </if>
+            <if test="password != null and password != ''">
+                PASSWORD = #{password},
+            </if>
+            <if test="name != null and name != ''">
+                NAME = #{name},
+            </if>
+            <if test="mobile != null and mobile != ''">
+                MOBILE = #{mobile},
+            </if>
+            <if test="email != null and email != ''">
+                EMAIL = #{email},
+            </if>
+            <if test="jobId != null and jobId != ''">
+                JOB_ID = #{jobId},
+            </if>
+            <if test="jobTitle != null and jobTitle != ''">
+                JOB_TITLE = #{jobTitle},
+            </if>
+            <if test="departmentId != null">
+                DEPARTMENT_ID = #{departmentId},
+            </if>
+            <if test="department != null and department != ''">
+                DEPARTMENT = #{department},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId},
+            </if>
+            <if test="company != null and company != ''">
+                COMPANY = #{company},
+            </if>
+            <if test="userType != null and userType != ''">
+                USER_TYPE = #{userType},
+            </if>
+            <if test="status != null and status != ''">
+                STATUS = #{status},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                CREATE_BY = #{createBy},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="modifyBy != null and modifyBy != ''">
+                MODIFY_BY = #{modifyBy},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from oit_user_center.oit_user where ID = #{id}
+    </delete>
+
+    <!--通过username删除-->
+    <delete id="deleteByUsername">
+        delete from oit_user_center.oit_user where username = #{username}
+    </delete>
+
+    <!--查询单个-->
+    <select id="queryByUsername" resultMap="OitUserMap">
+        select
+          ID, USERNAME, PASSWORD, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_user
+        where username = #{username} AND STATUS = 1
+    </select>
+
+    <!--通过部门ID作为筛选条件查询-->
+    <select id="queryAllByDepartment" resultMap="OitUserMap" parameterType="java.util.Map">
+        select
+        b.ID, b.USERNAME, b.PASSWORD, b.NAME, b.MOBILE, b.EMAIL, b.JOB_ID, b.JOB_TITLE, b.DEPARTMENT_ID, b.DEPARTMENT, b.COMPANY_ID, b.COMPANY, b.USER_TYPE, b.STATUS, b.CREATE_BY, b.CREATE_TIME, b.MODIFY_BY, b.MODIFY_TIME
+        from oit_user_center.oit_user_organize_rel a
+        left join oit_user_center.oit_user b on a.user_id = b.id
+        <where>
+            <if test="organizeId != null and organizeId != 0">
+                and a.ORGANIZE_ID = #{organizeId}
+            </if>
+            <if test="username != null and username != ''">
+                and b.USERNAME like '%' #{username} '%'
+            </if>
+            <if test="name != null and name != ''">
+                and b.NAME like '%' #{name} '%'
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and b.MOBILE like '%' #{mobile} '%'
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oit.oitcloud.dao.OitOrganizeDao">
+
+    <resultMap type="com.oit.oitcloud.entity.OitOrganize" id="OitOrganizeMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="pid" column="PID" jdbcType="INTEGER"/>
+        <result property="rid" column="RID" jdbcType="INTEGER"/>
+        <result property="sort" column="SORT" jdbcType="VARCHAR"/>
+        <result property="createBy" column="CREATE_BY" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="modifyBy" column="MODIFY_BY" jdbcType="VARCHAR"/>
+        <result property="modifyTime" column="MODIFY_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OitOrganizeMap">
+        select
+          ID, NAME, PID, RID, SORT, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_organize
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OitOrganizeMap">
+        select
+          ID, NAME, PID, RID, SORT, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_organize
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="OitOrganizeMap">
+        select
+          ID, NAME, PID, RID, SORT, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_organize
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and NAME = #{name}
+            </if>
+            <if test="pid != null">
+                and PID = #{pid}
+            </if>
+            <if test="rid != null">
+                and RID = #{rid}
+            </if>
+            <if test="sort != null and sort != ''">
+                and SORT = #{sort}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and CREATE_BY = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and CREATE_TIME = #{createTime}
+            </if>
+            <if test="modifyBy != null and modifyBy != ''">
+                and MODIFY_BY = #{modifyBy}
+            </if>
+            <if test="modifyTime != null">
+                and MODIFY_TIME = #{modifyTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into oit_user_center.oit_organize(ID, NAME, PID, RID, SORT, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        values (#{id}, #{name}, #{pid}, #{rid}, #{sort}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update oit_user_center.oit_organize
+        <set>
+            <if test="name != null and name != ''">
+                NAME = #{name},
+            </if>
+            <if test="pid != null">
+                PID = #{pid},
+            </if>
+            <if test="rid != null">
+                RID = #{rid},
+            </if>
+            <if test="sort != null and sort != ''">
+                SORT = #{sort},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                CREATE_BY = #{createBy},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="modifyBy != null and modifyBy != ''">
+                MODIFY_BY = #{modifyBy},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from oit_user_center.oit_organize where ID = #{id}
+    </delete>
+
+</mapper>

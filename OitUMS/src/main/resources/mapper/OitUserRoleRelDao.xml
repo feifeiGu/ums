@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oit.oitcloud.dao.OitUserRoleRelDao">
+
+    <resultMap type="com.oit.oitcloud.entity.OitUserRoleRel" id="OitUserRoleRelMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="userId" column="USER_ID" jdbcType="INTEGER"/>
+        <result property="roleId" column="ROLE_ID" jdbcType="INTEGER"/>
+        <result property="createBy" column="CREATE_BY" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="modifyBy" column="MODIFY_BY" jdbcType="VARCHAR"/>
+        <result property="modifyTime" column="MODIFY_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OitUserRoleRelMap">
+        select
+          ID, USER_ID, ROLE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_user_role_rel
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OitUserRoleRelMap">
+        select
+          ID, USER_ID, ROLE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_user_role_rel
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="OitUserRoleRelMap">
+        select
+          ID, USER_ID, ROLE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_user_role_rel
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="userId != null">
+                and USER_ID = #{userId}
+            </if>
+            <if test="roleId != null">
+                and ROLE_ID = #{roleId}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and CREATE_BY = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and CREATE_TIME = #{createTime}
+            </if>
+            <if test="modifyBy != null and modifyBy != ''">
+                and MODIFY_BY = #{modifyBy}
+            </if>
+            <if test="modifyTime != null">
+                and MODIFY_TIME = #{modifyTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into oit_user_center.oit_user_role_rel(USER_ID, ROLE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        values (#{userId}, #{roleId}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update oit_user_center.oit_user_role_rel
+        <set>
+            <if test="userId != null">
+                USER_ID = #{userId},
+            </if>
+            <if test="roleId != null">
+                ROLE_ID = #{roleId},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                CREATE_BY = #{createBy},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="modifyBy != null and modifyBy != ''">
+                MODIFY_BY = #{modifyBy},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from oit_user_center.oit_user_role_rel where ID = #{id}
+    </delete>
+
+    <!--通过条件删除(目前只支持userId和roleId)-->
+    <delete id="deleteByCondition">
+        delete from oit_user_center.oit_user_role_rel
+        <where>
+            <if test="userId != null">
+                and USER_ID = #{userId}
+            </if>
+            <if test="roleId != null">
+                and ROLE_ID = #{roleId}
+            </if>
+        </where>
+    </delete>
+</mapper>

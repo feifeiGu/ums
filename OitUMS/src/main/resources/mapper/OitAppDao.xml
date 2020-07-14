@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oit.oitcloud.dao.OitAppDao">
+
+    <resultMap type="com.oit.oitcloud.entity.OitApp" id="OitAppMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="appName" column="APP_NAME" jdbcType="VARCHAR"/>
+        <result property="appKey" column="APP_KEY" jdbcType="VARCHAR"/>
+        <result property="appSecret" column="APP_SECRET" jdbcType="VARCHAR"/>
+        <result property="status" column="STATUS" jdbcType="VARCHAR"/>
+        <result property="createBy" column="CREATE_BY" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="modifyBy" column="MODIFY_BY" jdbcType="VARCHAR"/>
+        <result property="modifyTime" column="MODIFY_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OitAppMap">
+        select
+          ID, APP_NAME, APP_KEY, APP_SECRET, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_app
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OitAppMap">
+        select
+          ID, APP_NAME, APP_KEY, APP_SECRET, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_app
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="OitAppMap">
+        select
+          ID, APP_NAME, APP_KEY, APP_SECRET, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_app
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="appName != null and appName != ''">
+                and APP_NAME = #{appName}
+            </if>
+            <if test="appKey != null and appKey != ''">
+                and APP_KEY = #{appKey}
+            </if>
+            <if test="appSecret != null and appSecret != ''">
+                and APP_SECRET = #{appSecret}
+            </if>
+            <if test="status != null and status != ''">
+                and STATUS = #{status}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and CREATE_BY = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and CREATE_TIME = #{createTime}
+            </if>
+            <if test="modifyBy != null and modifyBy != ''">
+                and MODIFY_BY = #{modifyBy}
+            </if>
+            <if test="modifyTime != null">
+                and MODIFY_TIME = #{modifyTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into oit_user_center.oit_app(APP_NAME, APP_KEY, APP_SECRET, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        values (#{appName}, #{appKey}, #{appSecret}, #{status}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update oit_user_center.oit_app
+        <set>
+            <if test="appName != null and appName != ''">
+                APP_NAME = #{appName},
+            </if>
+            <if test="appKey != null and appKey != ''">
+                APP_KEY = #{appKey},
+            </if>
+            <if test="appSecret != null and appSecret != ''">
+                APP_SECRET = #{appSecret},
+            </if>
+            <if test="status != null and status != ''">
+                STATUS = #{status},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                CREATE_BY = #{createBy},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="modifyBy != null and modifyBy != ''">
+                MODIFY_BY = #{modifyBy},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from oit_user_center.oit_app where ID = #{id}
+    </delete>
+
+    <!--查询单个-->
+    <select id="queryByAppKey" resultMap="OitAppMap">
+        select
+          ID, APP_NAME, APP_KEY, APP_SECRET, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_app
+        where APP_KEY = #{appKey} AND STATUS = 1
+    </select>
+</mapper>

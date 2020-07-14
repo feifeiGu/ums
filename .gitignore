@@ -1,0 +1,6 @@
+# Default ignored files
+.gradle
+.idea
+build
+OitUMS/src/test/java/com/oit/oitcloud/BaseTest.java
+OitUMS/src/test/java/com/oit/oitcloud/MyTest.java

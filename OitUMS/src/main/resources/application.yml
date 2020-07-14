@@ -1,0 +1,68 @@
+# oitcloud-ums.yaml 用户中心
+
+#feign：对文件传输进行压缩
+feign:
+  hystrix:
+    enabled: false             #关闭缓存
+  compression:
+    request:
+      mime-types:             #可以被压缩的传输文件类型
+        - text/xml
+        - application/xml
+        - application/json
+      min-request-size: 2048  #当传输的内容超过2048字节时就需要压缩
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+ribbon:
+  ConnectionTimeout: 50000
+  ReadTimeout: 50000
+  MaxAutoRetries: 2
+  MaxAutoRetriesNextServer: 0
+
+#定义Spring的数据源连接【内网数据库地址】
+spring:
+  datasource:
+    # 使用DEV库
+    url: jdbc:mysql://192.168.2.234:3306/oit_user_center?useUnicode=true&characterEncoding=utf-8&characterSetResults=utf-8&zeroDateTimeBehavior=round&allowMultiQueries=true
+    username: root
+    password: 123456
+    driver-class-name: org.gjt.mm.mysql.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    dbcp2:                     #进行数据库连接池的配置
+      min-idle: 5             #数据库连接池的最小维持连接数
+      max-idle: 5             #最大的连接数
+      initial-size: 5        #初始化提供的连接数
+      max-wait-millis: 200  #连接等待获取的最大超时时间
+      validationQuery: SELECT 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+
+  #在这里配置Redis数据源
+  redis:
+    database: 0 #系统服务使用0号
+
+    # 使用线上DEV库
+    host: 192.168.2.234
+    password: 123456
+    port: 6379
+    pool:
+      max-active: 10
+      max-idle: 8
+      min-idle: 2
+      max-wait: 100
+    timeout: 10000
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.oit.oitcloud.entity
+
+

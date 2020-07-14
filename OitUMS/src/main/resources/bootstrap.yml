@@ -1,0 +1,55 @@
+server:
+  port: 9310
+nacos:
+  server-addr: ${spring.cloud.nacos.discovery.server-addr}
+  config:
+    bootstrap:
+      enable: true
+      log:
+        enable: true
+spring:
+  application:
+    name: oitcloudums
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.2.243:8848
+      config:
+        server-addr: 192.168.2.243:8848
+        username: nacos
+        password: nacos
+        data-id: oitcloudums.yaml
+        group: OIT_CLOUD_UMS_GROUP
+        context-path: nacos
+        type: yaml
+        file-extension: yaml
+
+dingtalk:
+  appKey: ding64kjfwohnudyxp32
+  appSecret: qUPF1UZd0j5PZsM02J4LHHH3MVY07sRQ4hT8YirYWVqCPryzLqWsPelhK3q6tXhJ
+  getToken: https://oapi.dingtalk.com/gettoken?appkey={0}&appsecret={1}
+  getDepartments: https://oapi.dingtalk.com/department/list?access_token={0}
+  getDepartmentUsers: https://oapi.dingtalk.com/user/listbypage?access_token={0}&department_id={1,number,#}&offset=0&size=100
+
+---
+##### 开发环境 #####
+spring:
+  profiles: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.2.243:8848
+      config:
+        server-addr: 192.168.2.243:8848
+---
+##### 测试环境 #####
+spring:
+  profiles: test
+  cloud:
+    nacos:
+      discovery:
+        server-addr: test-nacos-master
+      config:
+        server-addr: test-nacos-master

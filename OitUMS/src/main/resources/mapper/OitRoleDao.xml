@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oit.oitcloud.dao.OitRoleDao">
+
+    <resultMap type="com.oit.oitcloud.entity.OitRole" id="OitRoleMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="roleName" column="ROLE_NAME" jdbcType="VARCHAR"/>
+        <result property="roleType" column="ROLE_TYPE" jdbcType="VARCHAR"/>
+        <result property="companyId" column="COMPANY_ID" jdbcType="INTEGER"/>
+        <result property="company" column="COMPANY" jdbcType="VARCHAR"/>
+        <result property="status" column="STATUS" jdbcType="VARCHAR"/>
+        <result property="createBy" column="CREATE_BY" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+        <result property="modifyBy" column="MODIFY_BY" jdbcType="VARCHAR"/>
+        <result property="modifyTime" column="MODIFY_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="OitRoleMap">
+        select
+          ID, ROLE_NAME, ROLE_TYPE, COMPANY_ID, COMPANY, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_role
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="OitRoleMap">
+        select
+          ID, ROLE_NAME, ROLE_TYPE, COMPANY_ID, COMPANY, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_role
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="OitRoleMap">
+        select
+          ID, ROLE_NAME, ROLE_TYPE, COMPANY_ID, COMPANY, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_role
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="roleName != null and roleName != ''">
+                and ROLE_NAME like '%' #{roleName} '%'
+            </if>
+            <if test="roleType != null and roleType != ''">
+                and ROLE_TYPE = #{roleType}
+            </if>
+            <if test="companyId != null">
+                and COMPANY_ID = #{companyId}
+            </if>
+            <if test="company != null and company != ''">
+                and COMPANY = #{company}
+            </if>
+            <if test="status != null and status != ''">
+                and STATUS = #{status}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and CREATE_BY = #{createBy}
+            </if>
+            <if test="createTime != null">
+                and CREATE_TIME = #{createTime}
+            </if>
+            <if test="modifyBy != null and modifyBy != ''">
+                and MODIFY_BY = #{modifyBy}
+            </if>
+            <if test="modifyTime != null">
+                and MODIFY_TIME = #{modifyTime}
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryByCondition" resultMap="OitRoleMap">
+        select
+        ID, ROLE_NAME, ROLE_TYPE, COMPANY_ID, COMPANY, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user_center.oit_role
+        <where>
+            <if test="roleName != null and roleName != ''">
+                and ROLE_NAME = #{roleName}
+            </if>
+            <if test="roleType != null and roleType != ''">
+                and ROLE_TYPE = #{roleType}
+            </if>
+            <if test="companyId != null">
+                and COMPANY_ID = #{companyId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into oit_user_center.oit_role(ROLE_NAME, ROLE_TYPE, COMPANY_ID, COMPANY, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        values (#{roleName}, #{roleType}, #{companyId}, #{company}, #{status}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update oit_user_center.oit_role
+        <set>
+            <if test="roleName != null and roleName != ''">
+                ROLE_NAME = #{roleName},
+            </if>
+            <if test="roleType != null and roleType != ''">
+                ROLE_TYPE = #{roleType},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId},
+            </if>
+            <if test="company != null and company != ''">
+                COMPANY = #{company},
+            </if>
+            <if test="status != null and status != ''">
+                STATUS = #{status},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                CREATE_BY = #{createBy},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="modifyBy != null and modifyBy != ''">
+                MODIFY_BY = #{modifyBy},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from oit_user_center.oit_role where ID = #{id}
+    </delete>
+
+</mapper>
