@@ -7,8 +7,8 @@ sourceCompatibility = 1.8
 buildscript {
     // 统一构建版本
     ext {
-        set('springCloudVersion', "Edgware.SR3")
-        set('springBootVersion', "1.5.22.RELEASE")
+        set('springCloudVersion', "Hoxton.RELEASE")
+        set('springBootVersion', "2.2.8.RELEASE")
     }
     // maven仓库源
     repositories {
@@ -17,8 +17,8 @@ buildscript {
             name('oit.nexus')
             url('https://nexus.oneinfitech.com/repository/maven-public/')
             credentials{
-                username = 'oit'
-                password = 'HWQ7Y2eylY'
+                username = 'admin'
+                password = 'LPc1sOLPol'
             }
         }
         maven { url('https://maven.aliyun.com/nexus/content/groups/public/') }      // 阿里云
@@ -38,8 +38,8 @@ allprojects {
             name('oit.nexus')
             url('https://nexus.oneinfitech.com/repository/maven-public/')
             credentials {
-                username = 'oit'
-                password = 'HWQ7Y2eylY'
+                username = 'admin'
+                password = 'LPc1sOLPol'
             }
         }
         maven { url('https://maven.aliyun.com/nexus/content/groups/public/') }      // 阿里云

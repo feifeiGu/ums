@@ -27,32 +27,29 @@
     <select id="queryById" resultMap="OitUserMap">
         select
           ID, USERNAME, PASSWORD, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_user
+        from oit_user
         where ID = #{id}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="OitUserMap">
         select
-          ID, USERNAME, PASSWORD, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_user
+          ID, USERNAME, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user
         limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="OitUserMap">
         select
-          ID, USERNAME, PASSWORD, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_user
+          ID, USERNAME, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
+        from oit_user
         <where>
             <if test="id != null">
                 and ID = #{id}
             </if>
             <if test="username != null and username != ''">
                 and USERNAME like '%' #{username} '%'
-            </if>
-            <if test="password != null and password != ''">
-                and PASSWORD = #{password}
             </if>
             <if test="name != null and name != ''">
                 and NAME like '%' #{name} '%'
@@ -104,13 +101,13 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into oit_user_center.oit_user(USERNAME, PASSWORD, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        insert into oit_user(USERNAME, PASSWORD, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
         values (#{username}, #{password}, #{name}, #{mobile}, #{email}, #{jobId}, #{jobTitle}, #{departmentId}, #{department}, #{companyId}, #{company}, #{userType}, #{status}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update oit_user_center.oit_user
+        update oit_user
         <set>
             <if test="username != null and username != ''">
                 USERNAME = #{username},
@@ -169,28 +166,28 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from oit_user_center.oit_user where ID = #{id}
+        delete from oit_user where ID = #{id}
     </delete>
 
     <!--通过username删除-->
     <delete id="deleteByUsername">
-        delete from oit_user_center.oit_user where username = #{username}
+        delete from oit_user where username = #{username}
     </delete>
 
     <!--查询单个-->
     <select id="queryByUsername" resultMap="OitUserMap">
         select
           ID, USERNAME, PASSWORD, NAME, MOBILE, EMAIL, JOB_ID, JOB_TITLE, DEPARTMENT_ID, DEPARTMENT, COMPANY_ID, COMPANY, USER_TYPE, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_user
+        from oit_user
         where username = #{username} AND STATUS = 1
     </select>
 
     <!--通过部门ID作为筛选条件查询-->
     <select id="queryAllByDepartment" resultMap="OitUserMap" parameterType="java.util.Map">
         select
-        b.ID, b.USERNAME, b.PASSWORD, b.NAME, b.MOBILE, b.EMAIL, b.JOB_ID, b.JOB_TITLE, b.DEPARTMENT_ID, b.DEPARTMENT, b.COMPANY_ID, b.COMPANY, b.USER_TYPE, b.STATUS, b.CREATE_BY, b.CREATE_TIME, b.MODIFY_BY, b.MODIFY_TIME
-        from oit_user_center.oit_user_organize_rel a
-        left join oit_user_center.oit_user b on a.user_id = b.id
+        b.ID, b.USERNAME, b.NAME, b.MOBILE, b.EMAIL, b.JOB_ID, b.JOB_TITLE, b.DEPARTMENT_ID, b.DEPARTMENT, b.COMPANY_ID, b.COMPANY, b.USER_TYPE, b.STATUS, b.CREATE_BY, b.CREATE_TIME, b.MODIFY_BY, b.MODIFY_TIME
+        from oit_user_organize_rel a
+        left join oit_user b on a.user_id = b.id
         <where>
             <if test="organizeId != null and organizeId != 0">
                 and a.ORGANIZE_ID = #{organizeId}

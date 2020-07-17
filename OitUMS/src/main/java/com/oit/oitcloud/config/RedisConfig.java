@@ -26,11 +26,11 @@ public class RedisConfig {
 
 
     // 配置缓存管理器
-    @Bean
-    public CacheManager cacheManager(RedisTemplate<?,?> redisTemplate) {
-        CacheManager cacheManager = new RedisCacheManager(redisTemplate);
-        return cacheManager;
-    }
+//    @Bean
+//    public CacheManager cacheManager(RedisTemplate<?,?> redisTemplate) {
+//        CacheManager cacheManager = new RedisCacheManager(redisTemplate);
+//        return cacheManager;
+//    }
 
 
     // 使用传统方式。【不搞创新了。-_-!】

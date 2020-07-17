@@ -2,6 +2,7 @@ package com.oit.oitcloud.service;
 
 import com.oit.oitcloud.dto.OrganizeDTO;
 import com.oit.oitcloud.entity.OitOrganize;
+import com.oit.oitcloud.entity.RestResponse;
 
 import java.util.List;
 
@@ -65,5 +66,5 @@ public interface OitOrganizeService {
      * 同步钉钉的部门列表
      * @return
      */
-    List<OitOrganize> syncOrgan();
+    RestResponse syncOrgan();
 }

@@ -19,7 +19,7 @@
     <select id="queryById" resultMap="OitRoleMap">
         select
           ID, ROLE_NAME, ROLE_TYPE, COMPANY_ID, COMPANY, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_role
+        from oit_role
         where ID = #{id}
     </select>
 
@@ -27,7 +27,7 @@
     <select id="queryAllByLimit" resultMap="OitRoleMap">
         select
           ID, ROLE_NAME, ROLE_TYPE, COMPANY_ID, COMPANY, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_role
+        from oit_role
         limit #{offset}, #{limit}
     </select>
 
@@ -35,7 +35,7 @@
     <select id="queryAll" resultMap="OitRoleMap">
         select
           ID, ROLE_NAME, ROLE_TYPE, COMPANY_ID, COMPANY, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_role
+        from oit_role
         <where>
             <if test="id != null">
                 and ID = #{id}
@@ -74,7 +74,7 @@
     <select id="queryByCondition" resultMap="OitRoleMap">
         select
         ID, ROLE_NAME, ROLE_TYPE, COMPANY_ID, COMPANY, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_role
+        from oit_role
         <where>
             <if test="roleName != null and roleName != ''">
                 and ROLE_NAME = #{roleName}
@@ -90,13 +90,13 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into oit_user_center.oit_role(ROLE_NAME, ROLE_TYPE, COMPANY_ID, COMPANY, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        insert into oit_role(ROLE_NAME, ROLE_TYPE, COMPANY_ID, COMPANY, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
         values (#{roleName}, #{roleType}, #{companyId}, #{company}, #{status}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update oit_user_center.oit_role
+        update oit_role
         <set>
             <if test="roleName != null and roleName != ''">
                 ROLE_NAME = #{roleName},
@@ -131,7 +131,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from oit_user_center.oit_role where ID = #{id}
+        delete from oit_role where ID = #{id}
     </delete>
 
 </mapper>

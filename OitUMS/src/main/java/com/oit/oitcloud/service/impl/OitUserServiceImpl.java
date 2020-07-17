@@ -281,7 +281,7 @@ public class OitUserServiceImpl implements OitUserService {
      * @return
      */
     @Override
-    public List<OitUser> syncUser() {
+    public RestResponse syncUser() {
         List<OitUser> oitUserList = new ArrayList<>();
         //调用钉钉API获取token接口
         String tokenUrl = MessageFormat.format(dingtalk_getToken,dingtalk_appKey,dingtalk_appSecret);
@@ -342,7 +342,7 @@ public class OitUserServiceImpl implements OitUserService {
                 }
             }
         }
-        return oitUserList;
+        return RestResponse.succuess(oitUserList);
     }
 
     /**

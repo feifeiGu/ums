@@ -106,7 +106,7 @@ public interface OitUserService {
      * 同步钉钉的用户信息
      * @return
      */
-    List<OitUser> syncUser();
+    RestResponse syncUser();
 
     /**
      * 获取用户及用户资源

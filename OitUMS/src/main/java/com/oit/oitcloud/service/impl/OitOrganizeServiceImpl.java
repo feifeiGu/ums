@@ -12,6 +12,8 @@ import com.oit.oitcloud.entity.OitUserOrganizeRel;
 import com.oit.oitcloud.entity.RestResponse;
 import com.oit.oitcloud.enums.ResultCode;
 import com.oit.oitcloud.service.OitOrganizeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,8 @@ import java.util.List;
  */
 @Service("oitOrganizeService")
 public class OitOrganizeServiceImpl implements OitOrganizeService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(OitOrganizeServiceImpl.class);
 
     @Value("${dingtalk.appKey}")
     private String dingtalk_appKey;
@@ -136,7 +140,7 @@ public class OitOrganizeServiceImpl implements OitOrganizeService {
      * @return
      */
     @Override
-    public List<OitOrganize> syncOrgan() {
+    public RestResponse syncOrgan() {
         List<OitOrganize> oitOrganizeList = new ArrayList<>();
         //调用钉钉API获取token接口
         String tokenUrl = MessageFormat.format(dingtalk_getToken,dingtalk_appKey,dingtalk_appSecret);
@@ -156,6 +160,7 @@ public class OitOrganizeServiceImpl implements OitOrganizeService {
                     oitOrganize.setId(Integer.valueOf(jsonArray.getJSONObject(i).get("id").toString()));
                     oitOrganize.setName(jsonArray.getJSONObject(i).get("name").toString());
                     if(jsonArray.getJSONObject(i).get("parentid") != null){
+                        LOG.info("=====parentid=====:{}",jsonArray.getJSONObject(i).get("parentid"));
                         oitOrganize.setPid(Integer.valueOf(jsonArray.getJSONObject(i).get("parentid").toString()));
                     }
                     oitOrganize.setRid(OitUmsConstants.DINGDING_ROOTID);
@@ -166,6 +171,6 @@ public class OitOrganizeServiceImpl implements OitOrganizeService {
                 }
             }
         }
-        return oitOrganizeList;
+        return RestResponse.succuess(oitOrganizeList);
     }
 }

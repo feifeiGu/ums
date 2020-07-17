@@ -16,7 +16,7 @@
     <select id="queryById" resultMap="OitUserRoleRelMap">
         select
           ID, USER_ID, ROLE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_user_role_rel
+        from oit_user_role_rel
         where ID = #{id}
     </select>
 
@@ -24,7 +24,7 @@
     <select id="queryAllByLimit" resultMap="OitUserRoleRelMap">
         select
           ID, USER_ID, ROLE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_user_role_rel
+        from oit_user_role_rel
         limit #{offset}, #{limit}
     </select>
 
@@ -32,7 +32,7 @@
     <select id="queryAll" resultMap="OitUserRoleRelMap">
         select
           ID, USER_ID, ROLE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_user_role_rel
+        from oit_user_role_rel
         <where>
             <if test="id != null">
                 and ID = #{id}
@@ -60,13 +60,13 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into oit_user_center.oit_user_role_rel(USER_ID, ROLE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        insert into oit_user_role_rel(USER_ID, ROLE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
         values (#{userId}, #{roleId}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update oit_user_center.oit_user_role_rel
+        update oit_user_role_rel
         <set>
             <if test="userId != null">
                 USER_ID = #{userId},
@@ -92,12 +92,12 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from oit_user_center.oit_user_role_rel where ID = #{id}
+        delete from oit_user_role_rel where ID = #{id}
     </delete>
 
     <!--通过条件删除(目前只支持userId和roleId)-->
     <delete id="deleteByCondition">
-        delete from oit_user_center.oit_user_role_rel
+        delete from oit_user_role_rel
         <where>
             <if test="userId != null">
                 and USER_ID = #{userId}

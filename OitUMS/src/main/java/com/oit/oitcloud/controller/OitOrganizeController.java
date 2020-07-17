@@ -103,10 +103,6 @@ public class OitOrganizeController {
     @ApiIgnore
     @GetMapping("organize/syncOrgan")
     public RestResponse syncOrgan() {
-        try {
-            return RestResponse.succuess(oitOrganizeService.syncOrgan());
-        } catch (Exception e) {
-            return RestResponse.fail();
-        }
+        return oitOrganizeService.syncOrgan();
     }
 }

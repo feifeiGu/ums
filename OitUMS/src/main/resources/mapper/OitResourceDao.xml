@@ -22,7 +22,7 @@
     <select id="queryById" resultMap="OitResourceMap">
         select
           ID, APP_ID, RESOURCE_NAME, RESOURCE_CODE, RESOURCE_TYPE, RESOURCE_PATH, PID, SORT, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_resource
+        from oit_resource
         where ID = #{id}
     </select>
 
@@ -30,7 +30,7 @@
     <select id="queryAllByLimit" resultMap="OitResourceMap">
         select
           ID, APP_ID, RESOURCE_NAME, RESOURCE_CODE, RESOURCE_TYPE, RESOURCE_PATH, PID, SORT, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_resource
+        from oit_resource
         limit #{offset}, #{limit}
     </select>
 
@@ -38,7 +38,7 @@
     <select id="queryAll" resultMap="OitResourceMap">
         select
           ID, APP_ID, RESOURCE_NAME, RESOURCE_CODE, RESOURCE_TYPE, RESOURCE_PATH, PID, SORT, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_resource
+        from oit_resource
         <where>
             <if test="id != null">
                 and ID = #{id}
@@ -84,13 +84,13 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into oit_user_center.oit_resource(APP_ID, RESOURCE_NAME, RESOURCE_CODE, RESOURCE_TYPE, RESOURCE_PATH, PID, SORT, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        insert into oit_resource(APP_ID, RESOURCE_NAME, RESOURCE_CODE, RESOURCE_TYPE, RESOURCE_PATH, PID, SORT, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
         values (#{appId}, #{resourceName}, #{resourceCode}, #{resourceType}, #{resourcePath}, #{pid}, #{sort}, #{status}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update oit_user_center.oit_resource
+        update oit_resource
         <set>
             <if test="appId != null">
                 APP_ID = #{appId},
@@ -134,7 +134,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from oit_user_center.oit_resource where ID = #{id}
+        delete from oit_resource where ID = #{id}
     </delete>
 
 </mapper>

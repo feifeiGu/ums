@@ -16,7 +16,7 @@
     <select id="queryById" resultMap="OitUserOrganizeRelMap">
         select
           ID, USER_ID, ORGANIZE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_user_organize_rel
+        from oit_user_organize_rel
         where ID = #{id}
     </select>
 
@@ -24,7 +24,7 @@
     <select id="queryAllByLimit" resultMap="OitUserOrganizeRelMap">
         select
           ID, USER_ID, ORGANIZE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_user_organize_rel
+        from oit_user_organize_rel
         limit #{offset}, #{limit}
     </select>
 
@@ -32,7 +32,7 @@
     <select id="queryAll" resultMap="OitUserOrganizeRelMap">
         select
           ID, USER_ID, ORGANIZE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_user_organize_rel
+        from oit_user_organize_rel
         <where>
             <if test="id != null">
                 and ID = #{id}
@@ -60,13 +60,13 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into oit_user_center.oit_user_organize_rel(USER_ID, ORGANIZE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        insert into oit_user_organize_rel(USER_ID, ORGANIZE_ID, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
         values (#{userId}, #{organizeId}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update oit_user_center.oit_user_organize_rel
+        update oit_user_organize_rel
         <set>
             <if test="userId != null">
                 USER_ID = #{userId},
@@ -92,17 +92,17 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from oit_user_center.oit_user_organize_rel where ID = #{id}
+        delete from oit_user_organize_rel where ID = #{id}
     </delete>
 
     <!--通过OrganizeId删除-->
     <delete id="deleteByOrganizeId">
-        delete from oit_user_center.oit_user_organize_rel where ORGANIZE_ID = #{organizeId}
+        delete from oit_user_organize_rel where ORGANIZE_ID = #{organizeId}
     </delete>
 
     <!--通过UserId删除-->
     <delete id="deleteByUserId">
-        delete from oit_user_center.oit_user_organize_rel where USER_ID = #{userId}
+        delete from oit_user_organize_rel where USER_ID = #{userId}
     </delete>
 
 </mapper>

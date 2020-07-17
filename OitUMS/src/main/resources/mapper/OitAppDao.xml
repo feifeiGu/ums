@@ -18,7 +18,7 @@
     <select id="queryById" resultMap="OitAppMap">
         select
           ID, APP_NAME, APP_KEY, APP_SECRET, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_app
+        from oit_app
         where ID = #{id}
     </select>
 
@@ -26,7 +26,7 @@
     <select id="queryAllByLimit" resultMap="OitAppMap">
         select
           ID, APP_NAME, APP_KEY, APP_SECRET, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_app
+        from oit_app
         limit #{offset}, #{limit}
     </select>
 
@@ -34,7 +34,7 @@
     <select id="queryAll" resultMap="OitAppMap">
         select
           ID, APP_NAME, APP_KEY, APP_SECRET, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_app
+        from oit_app
         <where>
             <if test="id != null">
                 and ID = #{id}
@@ -68,13 +68,13 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into oit_user_center.oit_app(APP_NAME, APP_KEY, APP_SECRET, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        insert into oit_app(APP_NAME, APP_KEY, APP_SECRET, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
         values (#{appName}, #{appKey}, #{appSecret}, #{status}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update oit_user_center.oit_app
+        update oit_app
         <set>
             <if test="appName != null and appName != ''">
                 APP_NAME = #{appName},
@@ -106,14 +106,14 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from oit_user_center.oit_app where ID = #{id}
+        delete from oit_app where ID = #{id}
     </delete>
 
     <!--查询单个-->
     <select id="queryByAppKey" resultMap="OitAppMap">
         select
           ID, APP_NAME, APP_KEY, APP_SECRET, STATUS, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_app
+        from oit_app
         where APP_KEY = #{appKey} AND STATUS = 1
     </select>
 </mapper>

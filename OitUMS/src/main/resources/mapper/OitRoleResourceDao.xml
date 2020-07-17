@@ -17,7 +17,7 @@
     <select id="queryById" resultMap="OitRoleResourceMap">
         select
           ID, ROLE_ID, RESOURCE_AUTH, RESOURCE_TYPE, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_role_resource
+        from oit_role_resource
         where ID = #{id}
     </select>
 
@@ -25,7 +25,7 @@
     <select id="queryAllByLimit" resultMap="OitRoleResourceMap">
         select
           ID, ROLE_ID, RESOURCE_AUTH, RESOURCE_TYPE, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_role_resource
+        from oit_role_resource
         limit #{offset}, #{limit}
     </select>
 
@@ -33,7 +33,7 @@
     <select id="queryAll" resultMap="OitRoleResourceMap">
         select
           ID, ROLE_ID, RESOURCE_AUTH, RESOURCE_TYPE, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME
-        from oit_user_center.oit_role_resource
+        from oit_role_resource
         <where>
             <if test="id != null">
                 and ID = #{id}
@@ -64,13 +64,13 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
-        insert into oit_user_center.oit_role_resource(ROLE_ID, RESOURCE_AUTH, RESOURCE_TYPE, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
+        insert into oit_role_resource(ROLE_ID, RESOURCE_AUTH, RESOURCE_TYPE, CREATE_BY, CREATE_TIME, MODIFY_BY, MODIFY_TIME)
         values (#{roleId}, #{resourceAuth}, #{resourceType}, #{createBy}, #{createTime}, #{modifyBy}, #{modifyTime})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update oit_user_center.oit_role_resource
+        update oit_role_resource
         <set>
             <if test="roleId != null">
                 ROLE_ID = #{roleId},
@@ -99,12 +99,12 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from oit_user_center.oit_role_resource where ID = #{id}
+        delete from oit_role_resource where ID = #{id}
     </delete>
 
     <!--通过roleId删除-->
     <delete id="deleteByRoleId">
-        delete from oit_user_center.oit_role_resource
+        delete from oit_role_resource
         where ROLE_ID = #{roleId}
     </delete>
 </mapper>

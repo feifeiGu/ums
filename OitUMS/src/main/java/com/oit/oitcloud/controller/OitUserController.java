@@ -11,11 +11,15 @@ import com.oit.oitcloud.service.OitUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2RefreshToken;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -45,6 +49,8 @@ public class OitUserController {
     private OitUserRoleRelService oitUserRoleRelService;
     @Resource
     private OitUserResourceService oitUserResourceService;
+    @Resource
+    private TokenStore tokenStore;
 
     /**
      * 通过主键ID获取用户信息
@@ -252,11 +258,7 @@ public class OitUserController {
     @ApiIgnore
     @GetMapping("users/syncUser")
     public RestResponse syncUser() {
-        try {
-            return RestResponse.succuess(oitUserService.syncUser());
-        } catch (Exception e) {
-            return RestResponse.fail();
-        }
+        return oitUserService.syncUser();
     }
 
     /**
@@ -289,5 +291,27 @@ public class OitUserController {
         List<OitUserResource> oitUserResourceList = oitUserResourceService.queryAll(oitUserResource);
         userResourceDTO.setOitUserResources(oitUserResourceList);
         return RestResponse.succuess(userResourceDTO);
+    }
+
+    /**
+     * 用户退出并删除token
+     * @param access_token
+     * @return
+     */
+    //@ApiOperation(value = "用户退出并删除token", notes = "用户退出并删除token", httpMethod = "GET", produces = "application/json")
+    @ApiIgnore
+    @GetMapping("logout")
+    public RestResponse logOut(@RequestParam(required = true) String access_token) {
+        if (StringUtils.isNotBlank(access_token)) {
+            OAuth2AccessToken oAuth2AccessToken = tokenStore.readAccessToken(access_token);
+            if (oAuth2AccessToken != null) {
+                System.out.println("access_token: " + oAuth2AccessToken.getValue());
+                tokenStore.removeAccessToken(oAuth2AccessToken);
+                OAuth2RefreshToken oAuth2RefreshToken = oAuth2AccessToken.getRefreshToken();
+                tokenStore.removeRefreshToken(oAuth2RefreshToken);
+                tokenStore.removeAccessTokenUsingRefreshToken(oAuth2RefreshToken);
+            }
+        }
+        return RestResponse.succuess();
     }
 }
